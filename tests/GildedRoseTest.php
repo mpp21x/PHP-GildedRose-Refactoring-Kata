@@ -51,6 +51,13 @@ class GildedRoseTest extends TestCase
         $this->shouldBe(0, 50);
     }
 
+    public function testSulfurasSellInQuality()
+    {
+        $this->createItem("Sulfuras, Hand of Ragnaros", 3, 3);
+        $this->updateQuality();
+        $this->shouldBe(3, 3);
+    }
+
     protected function createItem(string $name, int $sellIn, int $quality)
     {
         $this->item = new Item($name, $sellIn, $quality);
