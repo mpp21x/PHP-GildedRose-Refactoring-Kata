@@ -96,6 +96,13 @@ class GildedRoseTest extends TestCase
         $this->shouldBe(0, 0);
     }
 
+    public function testConjuredUpdateQuality()
+    {
+        $this->createItem("Conjured Mana Cake", 2, 20);
+        $this->updateItems();
+        $this->shouldBe(1, 18);
+    }
+
     protected function createItem(string $name, int $sellIn, int $quality)
     {
         $this->item = new Item($name, $sellIn, $quality);

@@ -4,6 +4,7 @@ namespace App;
 
 final class GildedRose
 {
+
     private $items = [];
 
     public function __construct($items)
@@ -28,6 +29,9 @@ final class GildedRose
                 $this->updateBackstagePasses($item);
                 break;
             case "Sulfuras, Hand of Ragnaros":
+                break;
+            case "Conjured Mana Cake":
+                $this->updateConjured($item);
                 break;
             default:
                 $this->updateNoramlProduct($item);
@@ -87,4 +91,20 @@ final class GildedRose
         }
         $item->quality = $item->quality - $decreaseNum;
     }
+
+    protected function updateConjured(Item $item): void
+    {
+        if ($item->sellIn > 0) {
+            $item->sellIn--;
+        }
+
+        $decreaseNum = 2;
+        if (($item->quality - $decreaseNum) < 0) {
+            $item->quality = 0;
+            return;
+        }
+        $item->quality = $item->quality - $decreaseNum;
+    }
+
 }
+
