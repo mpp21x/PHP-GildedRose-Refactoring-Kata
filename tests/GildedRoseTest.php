@@ -58,6 +58,22 @@ class GildedRoseTest extends TestCase
         $this->shouldBe(3, 3);
     }
 
+    public function testBackstagePassesQualityWhenSellInIsLessThanTenDay()
+    {
+        $expectedSellIn = 10;
+        $this->createItem("Backstage passes to a TAFKAL80ETC concert", $expectedSellIn, 0);
+        $exceptedQuality = 2;
+
+        $exceptedSellIns = range($expectedSellIn, 6);
+        foreach ($exceptedSellIns as $expectedSellIn) {
+            $this->updateQuality();
+            $expectedSellIn--;
+
+            $this->shouldBe($expectedSellIn, $exceptedQuality);
+            $exceptedQuality += 2;
+        }
+    }
+
     protected function createItem(string $name, int $sellIn, int $quality)
     {
         $this->item = new Item($name, $sellIn, $quality);
