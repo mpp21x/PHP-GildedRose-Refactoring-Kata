@@ -33,6 +33,13 @@ class GildedRoseTest extends TestCase
         $this->shouldBe(0, 0);
     }
 
+    public function testAgedBrieUpdateQualityIsAlwaysIncrease()
+    {
+        $this->createItem("Aged Brie", 0, 2);
+        $this->updateQuality();
+        $this->shouldBe(0, 3);
+    }
+    
     protected function createItem(string $name, int $sellIn, int $quality)
     {
         $this->item = new Item($name, $sellIn, $quality);
