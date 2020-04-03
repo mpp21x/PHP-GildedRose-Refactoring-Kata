@@ -3,6 +3,7 @@
 namespace Test;
 
 use App\GildedRose;
+use App\InvalidItemQualityException;
 use App\Item;
 use PHPUnit\Framework\TestCase;
 
@@ -39,7 +40,17 @@ class GildedRoseTest extends TestCase
         $this->updateQuality();
         $this->shouldBe(0, 3);
     }
-    
+
+    public function testProductQualityNeverGreaterThen_51()
+    {
+        $this->expectException(InvalidItemQualityException::class);
+        $this->createItem("foo", 0, 51);
+
+        $this->createItem("Aged Brie", 0, 50);
+        $this->updateQuality();
+        $this->shouldBe(0, 50);
+    }
+
     protected function createItem(string $name, int $sellIn, int $quality)
     {
         $this->item = new Item($name, $sellIn, $quality);
