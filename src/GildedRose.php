@@ -36,7 +36,7 @@ final class GildedRose {
                 }
             }
 
-            if ($item->name != 'Sulfuras, Hand of Ragnaros') {
+            if ($item->name != 'Sulfuras, Hand of Ragnaros' && $item->sellIn > 0) {
                 $item->sellIn = $item->sellIn - 1;
             }
 

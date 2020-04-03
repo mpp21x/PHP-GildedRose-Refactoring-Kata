@@ -13,12 +13,29 @@ class GildedRoseTest extends TestCase
 
     public function testNormalProductUpdateQuality()
     {
-        $this->item = new Item("foo", 1, 1);
+        $this->createItem("foo", 1, 1);
+        $this->updateQuality();
+        $this->assertSame("foo", $this->item->name);
+        $this->shouldBe(0, 0);
+    }
+
+    public function testProductQualityOrSellInIsNeverBeLessThenZero()
+    {
+        $this->createItem("foo", 0, 0);
+        $this->updateQuality();
+        $this->shouldBe(0, 0);
+    }
+
+    protected function createItem(string $name, int $sellIn, int $quality)
+    {
+        $this->item = new Item($name, $sellIn, $quality);
+    }
+
+    protected function updateQuality(): void
+    {
         $items = [$this->item];
         $gildedRose = new GildedRose($items);
         $gildedRose->updateQuality();
-        $this->assertSame("foo", $this->item->name);
-        $this->shouldBe(0, 0);
     }
 
     protected function shouldBe(int $sellIn, int $quality): void
