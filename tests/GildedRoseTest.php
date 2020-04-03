@@ -8,11 +8,22 @@ use PHPUnit\Framework\TestCase;
 
 class GildedRoseTest extends TestCase
 {
-    public function testFoo()
+    /** @var Item */
+    private $item;
+
+    public function testNormalProductUpdateQuality()
     {
-        $items = [new Item("foo", 0, 0)];
+        $this->item = new Item("foo", 1, 1);
+        $items = [$this->item];
         $gildedRose = new GildedRose($items);
         $gildedRose->updateQuality();
-        $this->assertEquals("foo", $items[0]->name);
+        $this->assertSame("foo", $this->item->name);
+        $this->shouldBe(0, 0);
+    }
+
+    protected function shouldBe(int $sellIn, int $quality): void
+    {
+        $this->assertSame($sellIn, $this->item->sellIn);
+        $this->assertSame($quality, $this->item->quality);
     }
 }
