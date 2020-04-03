@@ -15,7 +15,7 @@ class GildedRoseTest extends TestCase
     public function testNormalProductUpdateQuality()
     {
         $this->createItem("foo", 1, 1);
-        $this->updateQuality();
+        $this->updateItems();
         $this->assertSame("foo", $this->item->name);
         $this->shouldBe(0, 0);
     }
@@ -23,21 +23,21 @@ class GildedRoseTest extends TestCase
     public function testProductQualityOrSellInIsNeverBeLessThenZero()
     {
         $this->createItem("foo", 0, 0);
-        $this->updateQuality();
+        $this->updateItems();
         $this->shouldBe(0, 0);
     }
 
     public function testProductQualityDecreaseDoubleWhenSellInIsZero()
     {
         $this->createItem("foo", 0, 2);
-        $this->updateQuality();
+        $this->updateItems();
         $this->shouldBe(0, 0);
     }
 
     public function testAgedBrieUpdateQualityIsAlwaysIncrease()
     {
         $this->createItem("Aged Brie", 0, 2);
-        $this->updateQuality();
+        $this->updateItems();
         $this->shouldBe(0, 3);
     }
 
@@ -47,14 +47,14 @@ class GildedRoseTest extends TestCase
         $this->createItem("foo", 0, 51);
 
         $this->createItem("Aged Brie", 0, 50);
-        $this->updateQuality();
+        $this->updateItems();
         $this->shouldBe(0, 50);
     }
 
     public function testSulfurasSellInQuality()
     {
         $this->createItem("Sulfuras, Hand of Ragnaros", 3, 3);
-        $this->updateQuality();
+        $this->updateItems();
         $this->shouldBe(3, 3);
     }
 
@@ -66,7 +66,7 @@ class GildedRoseTest extends TestCase
 
         $exceptedSellIns = range($expectedSellIn, 6);
         foreach ($exceptedSellIns as $expectedSellIn) {
-            $this->updateQuality();
+            $this->updateItems();
             $expectedSellIn--;
 
             $this->shouldBe($expectedSellIn, $exceptedQuality);
@@ -82,7 +82,7 @@ class GildedRoseTest extends TestCase
 
         $exceptedSellIns = range($expectedSellIn, 2);
         foreach ($exceptedSellIns as $expectedSellIn) {
-            $this->updateQuality();
+            $this->updateItems();
             $expectedSellIn--;
             $this->shouldBe($expectedSellIn, $exceptedQuality);
             $exceptedQuality += 3;
@@ -92,7 +92,7 @@ class GildedRoseTest extends TestCase
     public function testBackstagePassesQualityIsZeroWhenSellInIsZero()
     {
         $this->createItem("Backstage passes to a TAFKAL80ETC concert", 1, 30);
-        $this->updateQuality();
+        $this->updateItems();
         $this->shouldBe(0, 0);
     }
 
@@ -101,11 +101,11 @@ class GildedRoseTest extends TestCase
         $this->item = new Item($name, $sellIn, $quality);
     }
 
-    protected function updateQuality(): void
+    protected function updateItems(): void
     {
         $items = [$this->item];
         $gildedRose = new GildedRose($items);
-        $gildedRose->updateQuality();
+        $gildedRose->updateItems();
     }
 
     protected function shouldBe(int $sellIn, int $quality): void
