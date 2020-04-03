@@ -89,6 +89,13 @@ class GildedRoseTest extends TestCase
         }
     }
 
+    public function testBackstagePassesQualityIsZeroWhenSellInIsZero()
+    {
+        $this->createItem("Backstage passes to a TAFKAL80ETC concert", 1, 30);
+        $this->updateQuality();
+        $this->shouldBe(0, 0);
+    }
+
     protected function createItem(string $name, int $sellIn, int $quality)
     {
         $this->item = new Item($name, $sellIn, $quality);

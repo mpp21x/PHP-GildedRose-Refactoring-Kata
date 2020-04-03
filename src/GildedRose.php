@@ -2,20 +2,23 @@
 
 namespace App;
 
-final class GildedRose {
+final class GildedRose
+{
 
     private $items = [];
 
-    public function __construct($items) {
+    public function __construct($items)
+    {
         $this->items = $items;
     }
 
-    public function updateQuality() {
+    public function updateQuality()
+    {
         foreach ($this->items as $item) {
             if ($item->name != 'Aged Brie' and $item->name != 'Backstage passes to a TAFKAL80ETC concert') {
                 if ($item->quality > 0) {
                     if ($item->name != 'Sulfuras, Hand of Ragnaros') {
-                        $decreaseNum = $item->sellIn == 0 ? 2 :1;
+                        $decreaseNum = $item->sellIn == 0 ? 2 : 1;
                         $item->quality = $item->quality - $decreaseNum;
                     }
                 }
@@ -57,6 +60,10 @@ final class GildedRose {
                         $item->quality = $item->quality + 1;
                     }
                 }
+            }
+
+            if ($item->sellIn == 0 && $item->name == "Backstage passes to a TAFKAL80ETC concert") {
+                $item->quality = 0;
             }
         }
     }
