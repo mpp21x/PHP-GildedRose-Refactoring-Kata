@@ -103,6 +103,21 @@ class GildedRoseTest extends TestCase
         $this->shouldBe(1, 18);
     }
 
+    public function testBackstagePassesQualityNeverGreaterThen_51()
+    {
+        $this->createItem("Backstage passes to a TAFKAL80ETC concert", 15, 50);
+        $this->updateItems();
+        $this->shouldBe(14, 50);
+
+        $this->createItem("Backstage passes to a TAFKAL80ETC concert", 9, 49);
+        $this->updateItems();
+        $this->shouldBe(8, 50);
+
+        $this->createItem("Backstage passes to a TAFKAL80ETC concert", 4, 49);
+        $this->updateItems();
+        $this->shouldBe(3, 50);
+    }
+
     protected function createItem(string $name, int $sellIn, int $quality)
     {
         $this->item = new Item($name, $sellIn, $quality);
