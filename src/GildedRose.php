@@ -16,6 +16,7 @@ final class GildedRose
     {
         foreach ($this->items as $item) {
             $this->updateItem($item);
+            $this->setItmQualityWhenTooMuch($item);
         }
     }
 
@@ -43,10 +44,6 @@ final class GildedRose
      */
     protected function updateAgedBrieQuality(Item $item): void
     {
-        if ($item->quality >= 50) {
-            return;
-        }
-
         $item->quality = $item->quality + 1;
     }
 
@@ -104,6 +101,13 @@ final class GildedRose
             return;
         }
         $item->quality = $item->quality - $decreaseNum;
+    }
+
+    protected function setItmQualityWhenTooMuch(Item $item)
+    {
+        if($item->quality > 50){
+            $item->quality = 50;
+        }
     }
 
 }
